@@ -1,0 +1,15 @@
+green:
+  enabled: false
+
+blue:
+  enabled: false
+
+productionSlot: blue
+
+replicaCount: 1
+
+ingress:
+  hostname: domain.com
+  stagehostname: stage.domain.com
+
+index: hello world

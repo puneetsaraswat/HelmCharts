@@ -1,0 +1,24 @@
+{{- $fullName := .Release.Name -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-service-stage
+  labels:
+    app: {{ template "blue-green.name" . }}
+    chart: {{ template "blue-green.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "blue-green.name" . }}
+    release: {{ .Release.Name }}
+    {{- if eq .Values.productionSlot "blue" }}
+    slot: green
+    {{- else }}
+    slot: blue
+    {{- end }}

@@ -1,0 +1,25 @@
+{{- $fullName := .Release.Name -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-ingress
+  labels:
+    app: {{ template "blue-green.name" . }}
+    chart: {{ template "blue-green.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.hostname }}
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: {{ $fullName }}-service-prod
+            servicePort: http
+  - host: {{ .Values.ingress.stagehostname }}
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: {{ $fullName }}-service-stage
+            servicePort: http

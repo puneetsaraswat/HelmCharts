@@ -1,0 +1,21 @@
+{{- $fullName := .Release.Name -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-service-prod
+  labels:
+    app: {{ template "blue-green.name" . }}
+    chart: {{ template "blue-green.chart" . }}
+    release: {{ .Release.Name }}
+    harness.io/releaseNo: {{ .Values.harnessReleaseNo }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "blue-green.name" . }}
+    release: {{ .Release.Name }}
+    slot: {{ .Values.productionSlot }}

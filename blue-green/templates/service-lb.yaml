@@ -1,0 +1,19 @@
+{{- $fullName := .Release.Name -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}-lb
+  labels:
+  app: {{ template "blue-green.name" . }}
+  chart: {{ template "blue-green.chart" . }}
+  release: {{ .Release.Name }}
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: {{ template "blue-green.name" . }}
+    release: {{ .Release.Name }}
+    k8s-app: {{ $fullName }}-nginx-ingress-lb
