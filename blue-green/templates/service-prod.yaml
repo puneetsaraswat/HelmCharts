@@ -7,7 +7,6 @@ metadata:
     app: {{ template "blue-green.name" . }}
     chart: {{ template "blue-green.chart" . }}
     release: {{ .Release.Name }}
-    harness.io/releaseNo: {{ .Values.harnessReleaseNo }}
 spec:
   type: ClusterIP
   ports:
