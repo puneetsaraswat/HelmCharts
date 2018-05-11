@@ -12,3 +12,20 @@ It uses following primary resources:
 A key variable is productionSlot. Based on its value prod service is configured to route the traffic to that slot.
 Following image is for the case when `productionSlot: blue`
 ![](initialstate.png)
+
+To Deploy the new release in green slot do following:
+`helm upgrade releasename repo/blue-green --set green.enabled=true --reuse-values`
+
+After that following would be the state.[Green circles represent the pods created in green slot]:
+![](stage-green.png)
+
+When testing is completed, and you are ready to promote this release to get Production traffic, run following command:
+`helm upgrade releasename repo/blue-green --set productionSlot=green --reuse-values`
+
+After this, state will be as follows:
+![](prod-green.png)
+
+If later, you want to delete the pods in blue slot [Optional], do following:
+`helm upgrade releasename repo/blue-green --set blue.enabled=false --reuse-values`
+Following will the state after it:
+![](prod-green-no-blue.png)
