@@ -29,3 +29,5 @@ If later, you want to delete the pods in blue slot [Optional], do following:
 `helm upgrade releasename repo/blue-green --set blue.enabled=false --reuse-values`
 Following will the state after it:
 ![](prod-green-no-blue.png)
+
+Hope its useful. Happy Helming!!
