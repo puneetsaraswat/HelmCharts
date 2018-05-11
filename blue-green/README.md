@@ -7,7 +7,7 @@ It uses following primary resources:
 5. Deployments [Simple NGINX Server]
     5.1 deployment-blue: 
     5.2 deployment-green:
-    Both deployment yamls are identical : except for they target different slots[blue or green]. Which one to deploy is controlled by variables blue.enabled & green.enabled.
+    Both deployment yamls are identical : except for they target different slots[i.e. blue or green. Slot is virtual concept realized by attaching label slot=blue|green to the pods, Service routed traffic to pods based on the slot value]. Which one to deploy is controlled by variables blue.enabled & green.enabled.
 
 A key variable is productionSlot. Based on its value prod service is configured to route the traffic to that slot.
 Following image is for the case when `productionSlot: blue`
