@@ -4,9 +4,9 @@ kind: Service
 metadata:
   name: {{ $fullName }}-lb
   labels:
-  app: {{ template "blue-green.name" . }}
-  chart: {{ template "blue-green.chart" . }}
-  release: {{ .Release.Name }}
+    app: {{ template "blue-green.name" . }}
+    chart: {{ template "blue-green.chart" . }}
+    release: {{ .Release.Name }}
 spec:
   type: LoadBalancer
   ports:

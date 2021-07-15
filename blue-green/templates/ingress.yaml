@@ -1,5 +1,5 @@
 {{- $fullName := .Release.Name -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}-ingress
@@ -12,14 +12,20 @@ spec:
   - host: {{ .Values.ingress.hostname }}
     http:
       paths:
-        - path: /
+        - pathType: Prefix
+          path: /
           backend:
-            serviceName: {{ $fullName }}-service-prod
-            servicePort: http
+            service:
+              name: {{ $fullName }}-service-prod
+              port:
+                name: http
   - host: {{ .Values.ingress.stagehostname }}
     http:
       paths:
-        - path: /
+        - pathType: Prefix
+          path: /
           backend:
-            serviceName: {{ $fullName }}-service-stage
-            servicePort: http
+            service:
+              name: {{ $fullName }}-service-stage
+              port:
+                name: http

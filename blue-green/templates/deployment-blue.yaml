@@ -1,5 +1,5 @@
 {{ if .Values.blue.enabled }}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "blue-green.fullname" . }}-blue
@@ -8,6 +8,11 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     app: {{ template "blue-green.name" . }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "blue-green.name" . }}
+      release: {{ .Release.Name }}
+      slot: blue
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
